@@ -1,0 +1,37 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "otome.moc3",
+		"Textures": [
+			"otome.1024/texture_00.png"
+		],
+		"DisplayInfo": "otome.cdi3.json",
+	    "Motions": {
+            "Idle": [
+                {"File": "otome_idle.motion3.json"}
+            ],
+			"Attack": [
+				{"File": "otome_Attack.motion3.json", "FadeInTime": 0.1, "FadeOutTime": 0.1}
+			],
+            "Damage": [
+                {"File": "otome_Damage.motion3.json", "FadeInTime": 0.1, "FadeOutTime": 0.1}
+            ],
+			"Win": [
+                {"File": "otome_win.motion3.json", "FadeInTime": 0.1, "FadeOutTime": 0.1}
+            ]
+        }
+		
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

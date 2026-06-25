@@ -1,0 +1,33 @@
+{
+    "Version": 3,
+    "FileReferences": {
+        "Moc": "enemy.moc3",
+        "Textures": [
+            "enemy.1024/texture_00.png"
+        ],
+        "DisplayInfo": "enemy.cdi3.json",
+        "Motions": {
+            "Idle": [
+                {"File": "enemy_idle.motion3.json"}
+            ],
+			"Attack": [
+				{"File": "enemy_attack.motion3.json", "FadeInTime": 0.1, "FadeOutTime": 0.1}
+			],
+            "Damage": [
+                {"File": "enemy_damage.motion3.json", "FadeInTime": 0.1, "FadeOutTime": 0.1}
+            ]
+        }
+    },
+    "Groups": [
+        {
+            "Target": "Parameter",
+            "Name": "EyeBlink",
+            "Ids": []
+        },
+        {
+            "Target": "Parameter",
+            "Name": "LipSync",
+            "Ids": []
+        }
+    ]
+}
