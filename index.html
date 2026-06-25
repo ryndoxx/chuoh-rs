@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>中王区 ライムストライク風ミニゲーム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght=900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div id="game-container">
+    <div id="city-zone">
+        <div id="top-ui-wrapper">
+            <div id="title-area">
+                <img src="./logo.png" alt="RHYME STRIKE" class="title-logo">
+            </div>
+            
+            <div id="hud-area" class="hidden">
+                <div id="hud-text-row">
+                    <div>TIME: <span id="timer-val">10.0</span>s</div>
+                    <div>正答数: <span id="score-val">0</span> 問</div>
+                </div>
+                <div id="time-bar-container">
+                    <div id="time-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ui-area">
+        <div id="battle-ui-wrapper" class="invisible-fixed">
+            <div id="quiz-zone">
+                <div id="quiz-word-box">
+                    <div id="quiz-word-target"></div>
+                </div>
+                <div id="player-selected-box">
+                    <div id="player-selected-text"></div>
+                </div>
+            </div>
+            <div id="ui-divider"></div>
+            <div id="action-panel">
+                <div id="battle-action">
+                    <button class="choice-btn" onclick="selectAnswer(0)"></button>
+                    <button class="choice-btn" onclick="selectAnswer(1)"></button>
+                    <button class="choice-btn" onclick="selectAnswer(2)"></button>
+                    <button class="choice-btn" onclick="selectAnswer(3)"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="setup-action">
+            <button class="action-btn" onclick="startGame()"><span>START</span></button>
+        </div>
+
+        <div id="result-action" class="hidden">
+            <div class="result-title">- Result -</div>
+            <div class="result-score">正答数: <span id="final-score">0</span> 問</div>
+            <button class="action-btn" onclick="backToSetup()"><span>戻る</span></button>
+        </div>
+    </div>
+</div>
+
+<script src="./live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js-legacy@6.5.2/dist/browser/pixi-legacy.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+<script src="./quiz-data.js"></script>
+<script src="./game.js"></script>
+</body>
+</html>

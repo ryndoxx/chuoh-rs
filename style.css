@@ -1,0 +1,241 @@
+/* style.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #050508; 
+    color: #fff;
+    font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 900;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 9:16 固定コンテナ */
+#game-container {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    max-width: calc(100dvh * (9 / 16));
+    max-height: 100dvh; 
+    background-color: #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+#game-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    object-fit: fill; /* 720x1280の解像度を維持してコンテナにフィットさせる */
+}
+
+.hidden { display: none !important; }
+.invisible-fixed { opacity: 0 !important; pointer-events: none !important; transition: opacity 0.3s ease; }
+
+/* 🏙️ 上半分：演出エリア（高さ62.5% / 800px相当） */
+#city-zone {
+    position: relative;
+    width: 100%;
+    height: 62.5%;
+    background: transparent; /* 背景はPixi側で描画するため透明に */
+    z-index: 2; /* キャンバスより前面 */
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* 上部UIのコンテナ配置 */
+#top-ui-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+/* 🎛️ 下半分：UIエリア（高さ37.5% / 480px相当） */
+#ui-area {
+    position: relative;
+    width: 100%;
+    height: 37.5%;
+    background: url('./ui-bg.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: 2; /* キャンバスより前面 */
+    box-sizing: border-box;
+}
+
+#battle-ui-wrapper, #setup-action, #result-action {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+#setup-action, #result-action {
+    justify-content: center;
+    align-items: center;
+}
+
+/* ロゴのサイズ調整 */
+#title-area {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+.title-logo {
+    max-width: 80%;
+    height: auto;
+}
+
+/* HUD表示エリア */
+#hud-area {
+    width: 100%;
+    margin-top: 10px;
+}
+#hud-text-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+}
+#time-bar-container {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+    overflow: hidden;
+}
+#time-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: #ff007f;
+    box-shadow: 0 0 8px #ff007f;
+}
+
+/* クイズ・回答テキストエリア */
+#quiz-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px; /* ハコを広げるために中央の隙間を少しタイトに */
+    width: 95%; /* 90% から 95% に広げて横幅を大きく */
+    margin: 0 auto;
+}
+
+/* 出題エリア（青い枠） */
+#quiz-word-box {
+    flex: 1;
+    background: rgba(5, 5, 10, 0.85);
+    border: 2px solid #00f0ff;
+    padding: 16px 6px; /* 12px 6px から拡大して上下左右にハコを広げる */
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.3; /* 2段レイアウトの行間を最適化 */
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+    min-height: 50px; /* 2段が入っても潰れない高さを確保 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 回答表示エリア（ピンクの枠） */
+#player-selected-box {
+    flex: 1;
+    background: rgba(5, 5, 10, 0.85);
+    border: 2px solid #ff007f;
+    padding: 16px 6px; /* 出題側とサイズを統一 */
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(255, 0, 127, 0.3);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 8px rgba(230, 60, 187, 0.6);
+}
+
+#ui-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    margin: 12px 0;
+    flex-shrink: 0; /* 追加：フレックスボックス内で潰れないようにする */
+}
+
+#action-panel {
+    width: 100%;
+}
+#battle-action {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.choice-btn {
+    background: rgba(15, 15, 25, 0.9);
+    border: 2px solid #3a3a4a;
+    color: #fff;
+    padding: 14px 10px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transform: skewX(-15deg);
+    transition: all 0.15s;
+}
+.choice-btn:active {
+    background: #ff007f;
+    border-color: #fff;
+}
+
+.action-btn {
+    background: #ff007f;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 15px 50px;
+    font-size: 22px;
+    font-weight: 900;
+    cursor: pointer;
+    transform: skewX(-15deg);
+    box-shadow: 0 0 15px rgba(255,0,127,0.4);
+    letter-spacing: 2px;
+    transition: all 0.1s;
+}
+.action-btn:active { transform: skewX(-15deg) scale(0.95); }
+.action-btn span { display: inline-block; transform: skewX(15deg); }
+
+.result-title { font-size: 32px; color: #ff007f; margin-bottom: 20px; }
+.result-score { font-size: 24px; margin-bottom: 40px; }
+
+/* アニメーション用 */
+.anim-correct { animation: vanish-correct 0.5s forwards !important; }
+.anim-incorrect { animation: shake-incorrect 0.4s cubic-bezier(.36,.07,.19,.97) both !important; }
+
+@keyframes vanish-correct {
+    0% { transform: skewX(15deg) scale(1); opacity: 1; }
+    100% { transform: skewX(15deg) scale(0); opacity: 0; }
+}
+@keyframes shake-incorrect {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(4px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+    40%, 60% { transform: translate3d(6px, 0, 0); }
+}
