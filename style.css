@@ -38,7 +38,7 @@ html, body {
     height: 100%;
     z-index: 1;
     pointer-events: none;
-    object-fit: fill; /* 720x1280の解像度を維持してコンテナにフィットさせる */
+    object-fit: fill; 
 }
 
 .hidden { display: none !important; }
@@ -134,8 +134,8 @@ html, body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 8px; /* ハコを広げるために中央の隙間を少しタイトに */
-    width: 95%; /* 90% から 95% に広げて横幅を大きく */
+    gap: 8px; 
+    width: 95%; 
     margin: 0 auto;
 }
 
@@ -144,13 +144,13 @@ html, body {
     flex: 1;
     background: rgba(5, 5, 10, 0.85);
     border: 2px solid #00f0ff;
-    padding: 16px 6px; /* 12px 6px から拡大して上下左右にハコを広げる */
+    padding: 16px 6px; 
     text-align: center;
     font-size: 18px;
-    line-height: 1.3; /* 2段レイアウトの行間を最適化 */
+    line-height: 1.3; 
     letter-spacing: 1px;
     box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-    min-height: 50px; /* 2段が入っても潰れない高さを確保 */
+    min-height: 50px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +161,7 @@ html, body {
     flex: 1;
     background: rgba(5, 5, 10, 0.85);
     border: 2px solid #ff007f;
-    padding: 16px 6px; /* 出題側とサイズを統一 */
+    padding: 16px 6px; 
     text-align: center;
     font-size: 18px;
     line-height: 1.3;
@@ -179,7 +179,7 @@ html, body {
     height: 2px;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
     margin: 12px 0;
-    flex-shrink: 0; /* 追加：フレックスボックス内で潰れないようにする */
+    flex-shrink: 0; 
 }
 
 #action-panel {
