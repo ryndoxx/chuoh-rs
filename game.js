@@ -1,10 +1,12 @@
 // game.js
 let currentQuestion = 0;
 let score = 0;
-const maxTime = 10; 
+const maxTime = 30; 
 let timeLeft = maxTime;
 let isActionLocked = false;
 let isGameActive = false; 
+let currentShuffledChoices = []; // 追加：シャッフルされた選択肢を保持
+let shuffledQuizIndices = []; // 追加：問題の出題順を保持
 
 let pixiApp = null;
 let bgSprite = null;
@@ -94,6 +96,14 @@ function startGame() {
     score = 0;
     timeLeft = maxTime;
     
+    // --- ここから追加 ---
+    shuffledQuizIndices = [];
+    for (let i = 0; i < quizData.length; i++) {
+        shuffledQuizIndices.push(i);
+    }
+    shuffledQuizIndices.sort(() => Math.random() - 0.5);
+    // --- ここまで追加 ---
+
     if (live2dModel) {
         live2dModel.x = OTOME_POS_BATTLE; // バトル位置に移動
     }
@@ -118,15 +128,28 @@ function showQuiz() {
 
     document.getElementById("player-selected-text").innerHTML = "";
 
-    const qIndex = currentQuestion % quizData.length;
+    // --- ここから書き換え ---
+    // もし用意した問題数より多く回答が進んだら、再度シャッフルする
+    if (currentQuestion > 0 && currentQuestion % quizData.length === 0) {
+        shuffledQuizIndices.sort(() => Math.random() - 0.5);
+    }
+    const qIndex = shuffledQuizIndices[currentQuestion % quizData.length];
     const q = quizData[qIndex];
+    // --- ここまで書き換え ---
     
     document.getElementById("quiz-word-target").innerHTML = 
         `${q.word.main}<br><span style="font-size: 0.8em;">${q.word.sub}</span>`;
 
+    // 選択肢に「元の位置（originalIndex）」を紐付けてシャッフルする
+    currentShuffledChoices = q.choices.map((choice, index) => {
+        return { data: choice, originalIndex: index };
+    });
+    currentShuffledChoices.sort(() => Math.random() - 0.5);
+
     const buttons = document.querySelectorAll(".choice-btn");
     buttons.forEach((btn, idx) => {
-        btn.innerText = q.choices[idx].main;
+        // シャッフル後のテキストをボタンに表示
+        btn.innerText = currentShuffledChoices[idx].data.main;
         btn.disabled = false;
     });
 
@@ -185,16 +208,22 @@ function selectAnswer(idx) {
     if (isActionLocked || !isGameActive) return;
     isActionLocked = true; 
 
-    const qIndex = currentQuestion % quizData.length;
+    // --- ここから書き換え ---
+    const qIndex = shuffledQuizIndices[currentQuestion % quizData.length];
     const q = quizData[qIndex];
+    // --- ここまで書き換え ---
     
     const buttons = document.querySelectorAll(".choice-btn");
     buttons.forEach(btn => btn.disabled = true);
 
-    document.getElementById("player-selected-text").innerHTML = 
-        `${q.choices[idx].main}<br><span style="font-size: 0.7em;">${q.choices[idx].sub}</span>`;
+    // シャッフルされた配列から、プレイヤーが選んだデータを取得
+    const selected = currentShuffledChoices[idx];
 
-    if (idx === q.correct) {
+    document.getElementById("player-selected-text").innerHTML = 
+        `${selected.data.main}<br><span style="font-size: 0.7em;">${selected.data.sub}</span>`;
+
+    // 選んだ選択肢の「元の位置」が、正解データ（q.correct）と一致しているか判定
+    if (selected.originalIndex === q.correct) {
         score++;
         document.getElementById("score-val").innerText = score;
         buttons[idx].classList.add("anim-correct");
